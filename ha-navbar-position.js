@@ -50,6 +50,22 @@ class NavbarPosition {
     if (appHeader && (appHeader.style.top !== 'auto' || appHeader.style.bottom !== '0px')) {
       appHeader.style.setProperty('top', 'auto', 'important');
       appHeader.style.setProperty('bottom', '0px', 'important');
+
+      const ua = navigator.userAgent;
+      const isIos = /iPad|iPhone|iPod/.test(ua);
+      const isIosWebViewOrStandalone =
+        isIos && (navigator.standalone || /Mobile/.test(ua));
+      if (isIosWebViewOrStandalone) {
+        appHeader.style.setProperty("padding-bottom", "25px", "important");
+
+        // set nav icons size ratio to 1, for a more iOS style feeling
+        const appHeaderTabs = appHeader.querySelectorAll("paper-tab");
+        if (appHeaderTabs && appHeaderTabs.length) {
+          appHeaderTabs.forEach((tab) =>
+            tab.style.setProperty("padding", "0 16px", "important")
+          );
+        }
+      }
     }
   }
 
